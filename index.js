@@ -3,7 +3,7 @@ const cors = require("cors");
 const fetch = require("node-fetch");
 
 const app = express();
-
+const port = 3000;
 app.use(cors());
 app.use(express.json());
 
@@ -56,11 +56,11 @@ app.get("/api/product/:code", async (req, res) => {
     }
 });
 
-
-const PORT = 3000;
-
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+const http = require('http');
+const hostName = '127.0.0.1';
+const server =http.createServer((req,res) =>{});
+server.listen(PORT, hostName, () => {
+    console.log(`Server running on http://${hostName}:${port}`);
 });
 
 module.exports = app;
