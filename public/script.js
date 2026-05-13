@@ -156,32 +156,49 @@ function saveProduct(item) {
     .then(() => alert("Saved!"));
 }
 
-function compareFoods() {
-    const food1 = document.getElementById("food1").value;
-    const food2 = document.getElementById("food2").value;
+let foodCache = {};
+let compareChart = null;
+function fetchFood(query) {
+    if (foodCache[query]) return Promise.resolve(foodCache[query]);
 
+    return fetch(`/api/search?query=${query}`)
+        .then(res => res.json())
+        .then(data => {
+            foodCache[query] = data;
+            return data;
+        });
+}
+
+function compareFoods() {
+    const food1 = document.getElementById("food1").value.trim();
+    const food2 = document.getElementById("food2").value.trim();
     Promise.all([
-        fetch(`/api/search?query=${food1}`).then(res => res.json()),
-        fetch(`/api/search?query=${food2}`).then(res => res.json())
+        fetchFood(food1),
+        fetchFood(food2)
     ])
     .then(([data1, data2]) => {
-        const item1 = data1[0];
-        const item2 = data2[0];
-
+        const item1 = data1?.[0];
+        const item2 = data2?.[0];
+        if (!item1 || !item2) {
+            document.getElementById("compareResults").innerHTML =
+                "<p>Food not found.</p>";
+            return;
+        }
         document.getElementById("compareResults").innerHTML = `
         <div class="card">
             <h3>${item1.product_name}</h3>
-            <p>Sugar: ${item1.nutriments.sugars_100g || 0}</p>
+            <p>Sugar: ${item1.nutriments?.sugars_100g || 0}</p>
         </div>
         <div class="card">
             <h3>${item2.product_name}</h3>
-            <p>Sugar: ${item2.nutriments.sugars_100g || 0}</p>
+            <p>Sugar: ${item2.nutriments?.sugars_100g || 0}</p>
         </div>
         `;
-
         const ctx = document.getElementById("compareChart");
-
-        new Chart(ctx, {
+        if (compareChart) {
+            compareChart.destroy();
+        }
+        compareChart = new Chart(ctx, {
             type: "bar",
             data: {
                 labels: ["Sugar", "Fat", "Protein"],
@@ -189,17 +206,17 @@ function compareFoods() {
                     {
                         label: item1.product_name,
                         data: [
-                            item1.nutriments.sugars_100g || 0,
-                            item1.nutriments.fat_100g || 0,
-                            item1.nutriments.proteins_100g || 0
+                            item1.nutriments?.sugars_100g || 0,
+                            item1.nutriments?.fat_100g || 0,
+                            item1.nutriments?.proteins_100g || 0
                         ]
                     },
                     {
                         label: item2.product_name,
                         data: [
-                            item2.nutriments.sugars_100g || 0,
-                            item2.nutriments.fat_100g || 0,
-                            item2.nutriments.proteins_100g || 0
+                            item2.nutriments?.sugars_100g || 0,
+                            item2.nutriments?.fat_100g || 0,
+                            item2.nutriments?.proteins_100g || 0
                         ]
                     }
                 ]
