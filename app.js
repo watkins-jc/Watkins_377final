@@ -80,7 +80,7 @@ app.get('/compare', (req,res) =>{
 })
 
 app.listen(port, () => {
-    console.log('Express app is listening on port: http://localhost:${port}');
+    console.log('Express app is listening on port: ${port}');
 });
 
 module.exports = app;
