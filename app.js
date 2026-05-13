@@ -17,7 +17,6 @@ const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey =process.env.SUPABASE_KEY;
 const supbabase = supabaseClient.createClient(supabaseUrl,supabaseKey);
 
-app.use(express.static(__dirname + '/public'));
 
 app.get('/api/search', async (req,res) =>{
     const query = req.query.query;
