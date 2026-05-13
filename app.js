@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const supabaseClient = require('@supabase/supabase-js')
 const dotenv = require('dotenv');
 const cors = require("cors");
-const fetch=require("node-fetch");
 const app=express();
 const port=3000;
 dotenv.config();
@@ -20,7 +19,7 @@ const supbabase = supabaseClient.createClient(supabaseUrl,supabaseKey);
 
 app.use(express.static(__dirname + '/public'));
 
-app.get('/api/search',(req,res) =>{
+app.get('/api/search', async (req,res) =>{
     const query = req.query.query;
     try{
         const response = await fetch(
