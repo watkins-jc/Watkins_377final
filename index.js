@@ -79,7 +79,7 @@ app.get('/compare', (req,res) =>{
     res.sendFile('public/compare.html',{ root:__dirname });
 })
 app.use((req, res) => {
-    res.status(404).sendFile(__dirname + "/../public/404.html",{ root:__dirname });
+    res.status(404).sendFile(__dirname + "/public/404.html",{ root:__dirname });
 });
 
 app.listen(port, () => {
