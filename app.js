@@ -9,7 +9,7 @@ const port=3000;
 dotenv.config();
 
 app.use(bodyParser.json());
-app.use(express.static(__dirname+'/public'));
+app.use(express.static(__dirname + '/public'));
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey =process.env.SUPABASE_KEY;
@@ -25,12 +25,12 @@ app.get('/hello',(req,res) =>{
     res.json(output);
 })
 
-app.get('/about', (req,res) =>{
-    res.sendFile('public/about.html',{ root:__dirname });
-})
-
 app.get('/', (req,res) =>{
     res.sendFile('public/home.html',{ root:__dirname });
+})
+
+app.get('/about', (req,res) =>{
+    res.sendFile('public/about.html',{ root:__dirname });
 })
 
 app.get('/results', (req,res) =>{
