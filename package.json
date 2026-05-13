@@ -1,0 +1,25 @@
+{
+  "name": "watkins_377final",
+  "version": "1.0.0",
+  "description": "Express app for final",
+  "homepage": "https://github.com/watkins-jc/Watkins_377final#readme",
+  "bugs": {
+    "url": "https://github.com/watkins-jc/Watkins_377final/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/watkins-jc/Watkins_377final.git"
+  },
+  "license": "ISC",
+  "author": "John Watkins",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon -e '*'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "nodemon": "^3.1.14"
+  }
+}
