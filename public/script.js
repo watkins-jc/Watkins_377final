@@ -14,39 +14,78 @@ function newSearch() {
 
 if (window.location.pathname.includes("results.html")) {
     const query = params.get("query");
-
     if (query) {
         document.getElementById("searchBar").value = query;
-
+        document.getElementById("results").innerHTML =
+            "<h2>Loading products...</h2>";
+        document.getElementById("healthy").innerHTML =
+            "<h2>Finding healthier alternatives...</h2>";
         fetch(`/api/search?query=${query}`)
             .then(res => res.json())
             .then(data => {
                 let output = "";
                 let healthyOutput = "";
-
-                data.forEach(item => {
+                data.slice(0, 10).forEach(item => {
                     output += `
                     <div class="card">
                         <h3>${item.product_name || "No Name"}</h3>
                         <p>${item.brands || "Unknown Brand"}</p>
                         <img src="${item.image_front_url || ""}">
-                        <br><br>
+                        <p>Sugar:${item.nutriments?.sugars_100g || 0}g</p>
+                        <p>Protein:${item.nutriments?.proteins_100g || 0}g</p>
+                        <br>
                         <a href="details.html?code=${item.code}">View Details</a>
                     </div>
                     `;
-
-                    if (item.nutriments?.sugars_100g < 5) {
-                        healthyOutput += `
-                        <div class="card">
-                            <h3>${item.product_name}</h3>
-                            <p>Low Sugar Option</p>
-                        </div>
-                        `;
-                    }
                 });
-
-                document.getElementById("results").innerHTML = output;
-                document.getElementById("healthy").innerHTML = healthyOutput;
+                const healthierProducts = data.filter(item => {
+                    const grade =
+                        item.nutriscore_grade;
+                    return (
+                        grade === "a" ||
+                        grade === "b"
+                    );
+                });
+                const nutriRank = {
+                    a: 1,
+                    b: 2,
+                    c: 3,
+                    d: 4,
+                    e: 5
+                };
+                healthierProducts.sort((a, b) => {
+                    return (
+                        nutriRank[a.nutriscore_grade || "e"]
+                        -
+                        nutriRank[b.nutriscore_grade || "e"]
+                    );
+                });
+                healthierProducts.slice(0, 5).forEach(item => {
+                    healthyOutput += `
+                    <div class="card">
+                        <h3>${item.product_name || "Healthy Option"}</h3>
+                        <p>Healthier options</p>
+                        <img src="${item.image_front_url || ""}" >
+                        <p>Sugar:${item.nutriments?.sugars_100g || 0}g</p>
+                        <p>Fat:${item.nutriments?.fat_100g || 0}g</p>
+                        <p>Protein:${item.nutriments?.proteins_100g || 0}g</p>
+                        <p>Nutri-Score:${item.nutriscore_grade?.toUpperCase()||"N/A"}</p>
+                        <br>
+                        <a href="details.html?code=${item.code}">View Details</a>
+                    </div>
+                    `;
+                });
+                if (healthyOutput === "") {
+                    healthyOutput = `
+                    <div class="card">
+                        <h3>No healthier alternatives found.</h3>
+                    </div>
+                    `;
+                }
+                document.getElementById("results").innerHTML =
+                    output;
+                document.getElementById("healthy").innerHTML =
+                    healthyOutput;
             });
     }
 }
