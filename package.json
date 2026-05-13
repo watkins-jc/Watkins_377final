@@ -13,7 +13,7 @@
   "license": "ISC",
   "author": "John Watkins",
   "type": "commonjs",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start": "nodemon -e '*'",
     "test": "echo \"Error: no test specified\" && exit 1"
