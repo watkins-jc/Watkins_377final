@@ -1,8 +1,12 @@
 // Variable definitions//
 const express = require('express');
+const bodyParser = require('body-parser');
 const supabaseClient = require('@supabase/supabase-js')
 const app=express();
 const port=3000;
+
+app,use(bodyParser.json())
+
 const supabaseUrl = 'https://paodsufsmvtzneuqxqdt.supabase.co';
 const supabaseKey ='sb_publishable_NyCUaUtScUcWGhAv6tJfiQ_2fS7x5AT';
 const supbabase = supabaseClient.createClient(supabaseUrl,supabaseKey);
