@@ -14,7 +14,7 @@ the OpenFoodFacts nutri scores.
     -Safari
 
 ## Delpoyment
-Vercel link here -->
+Vercel link here --> https://watkins-377final.vercel.app/
 
 # API Endpoints
 GET /api/search
