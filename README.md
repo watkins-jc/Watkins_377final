@@ -1,44 +1,45 @@
-# Watkins_377final
-Final for INST377 project
-
 # Healthy Food Alternatives
-This web app helps users, mostly aimed towards college students search for foods,
-view nutritional information, compare two foods, and discover healthier alternatives using 
-the OpenFoodFacts nutri scores.
 
-## Target Browsers
- - Any workable browsers
-    -Chrome
-    -Edge
-    -FireFox
-    -Safari
+Final Project for INST377
 
-## Delpoyment
-Vercel link here --> https://watkins-377final.vercel.app/
+## Project Description
 
-# API Endpoints
-GET /api/search
-    goes to the OpenFoodFacts API
+Healthy Food Alternatives is a web application designed primarily for college students who want to make healthier food choices quickly and easily.
 
-GET /api/product/:code
-    Retrieves specific product details
+Users can:
+- Search for foods
+- View nutrition information
+- Compare two foods side-by-side
+- Discover healthier alternatives using Nutri-Score rankings
+- Save favorite products to a Supabase database
 
-POST /api/save
-    Saves products to Supabase database
+The application uses:
+- Node.js
+- Express.js
+- Supabase
+- OpenFoodFacts API
+- Chart.js
+- Animate.css
 
-GET /api/saved
-    Retrieves saved products
+---
 
-# Installation
-npm install
-Create a .env file containing:
-    SUPABASE_URL=
-    SUPABASE_KEY=
-Run server:
-    node app.js
+# Target Browsers
 
-# Future Improvements
-Any additional improvements i would make are creating user profiles
-personalized reccomendations
-Barcode scanning,
-Being able to add things into the API from the app
+This application is designed for modern desktop and mobile browsers including:
+
+- Google Chrome
+- Microsoft Edge
+- Mozilla Firefox
+- Safari
+
+---
+
+# Deployment Link
+
+Vercel Deployment:
+
+https://watkins-377final.vercel.app/
+
+---
+
+[Click this to see the Developer Manuel](docs/developer-manuel.md)
