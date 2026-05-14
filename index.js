@@ -15,7 +15,7 @@ app.use(express.static(__dirname + '/public'));
 //supabase setup//
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey =process.env.SUPABASE_KEY;
-const supbabase = supabaseClient.createClient(supabaseUrl,supabaseKey);
+const supabase = supabaseClient.createClient(supabaseUrl,supabaseKey);
 
 
 app.get('/api/search', async (req,res) =>{
@@ -62,7 +62,18 @@ app.post("/api/save", async (req, res) => {
     }
     res.json(data);
 });
+app.get("/api/saved", async(req,res)=>{
 
+    const {data,error}=await supbabase
+    .from("saved_products")
+    .select("*");
+
+    if(error){
+        return res.status(500).json(error);
+    }
+
+    res.json(data);
+});
 app.get('/', (req,res) =>{
     res.sendFile('public/home.html',{ root:__dirname });
 })
@@ -79,7 +90,7 @@ app.get('/compare', (req,res) =>{
     res.sendFile('public/compare.html',{ root:__dirname });
 })
 app.use((req, res) => {
-    res.status(404).sendFile(__dirname + "/public/404.html",{ root:__dirname });
+    res.status(404).sendFile(__dirname + "/public/404.html");
 });
 
 app.listen(port, () => {
